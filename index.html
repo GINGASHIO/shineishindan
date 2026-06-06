@@ -640,7 +640,6 @@
                 </div>
               </div>
               <div class="actions">
-                <button class="primary" type="button" id="copyResult">結果をコピー</button>
                 <button class="secondary" type="button" id="restart">もう一度診断</button>
               </div>
               <div class="contact-strip">
@@ -648,7 +647,7 @@
                   <strong>体験・相談で最終確認</strong>
                   学年、経験、通える曜日を伝えると、より合う入口を相談しやすくなります。
                 </p>
-                <a class="primary" href="https://jpc-sports.com/" target="_blank" rel="noreferrer">公式サイトを見る</a>
+                <a class="primary" href="https://shinei-soccer.com/" target="_blank" rel="noreferrer">公式サイトを見る</a>
               </div>
             </div>
           </div>
@@ -838,7 +837,6 @@
       const resultLogo = document.querySelector("#resultLogo");
       const resultPoints = document.querySelector("#resultPoints");
       const resultNext = document.querySelector("#resultNext");
-      const copyResult = document.querySelector("#copyResult");
       const restart = document.querySelector("#restart");
 
       let current = 0;
@@ -964,7 +962,6 @@
         result.classList.remove("is-show");
         loading.classList.remove("is-show");
         quiz.classList.remove("hidden");
-        copyResult.textContent = "結果をコピー";
         renderQuestion();
       }
 
@@ -986,17 +983,6 @@
         answers = answers.slice(0, current);
         renderQuestion();
       }
-
-      copyResult.addEventListener("click", async () => {
-        if (!lastResult) return;
-        const text = `真栄FC U-12 クラス診断結果：${lastResult.title}\n${lastResult.text}`;
-        try {
-          await navigator.clipboard.writeText(text);
-          copyResult.textContent = "コピーしました";
-        } catch {
-          copyResult.textContent = "コピーできませんでした";
-        }
-      });
 
       restart.addEventListener("click", reset);
       backButton.addEventListener("click", goBack);
