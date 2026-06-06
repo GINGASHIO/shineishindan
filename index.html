@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>真栄FC U-12 クラス診断</title>
+    <style>
+      :root {
+        --ink: #102033;
+        --muted: #607085;
+        --line: #dce4ee;
+        --paper: #ffffff;
+        --field: #137c4b;
+        --leaf: #1fad6b;
+        --sun: #f4b53f;
+        --sky: #dff3ff;
+        --navy: #152b49;
+        --danger: #d94d3f;
+        --shadow: 0 22px 52px rgba(16, 32, 51, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #f5f8fb;
+      }
+
+      button,
+      a {
+        font: inherit;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 42vh;
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        isolation: isolate;
+        padding: 28px clamp(18px, 4vw, 56px);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background:
+          linear-gradient(90deg, rgba(9, 28, 47, 0.84), rgba(9, 28, 47, 0.46) 45%, rgba(9, 28, 47, 0.1)),
+          url("assets/hero-youth-soccer.png") center / cover;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 92px;
+        z-index: -1;
+        background: linear-gradient(180deg, rgba(245, 248, 251, 0), #f5f8fb 88%);
+      }
+
+      .brand {
+        position: absolute;
+        top: 22px;
+        left: clamp(18px, 4vw, 56px);
+        display: inline-flex;
+        gap: 12px;
+        align-items: center;
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .brand-logo {
+        width: 52px;
+        height: 42px;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.3));
+      }
+
+      .hero-copy {
+        width: min(720px, 100%);
+        color: #fff;
+        padding-bottom: 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 14px;
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 30px;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--sun);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.15rem, 7vw, 5.3rem);
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .hero-copy p {
+        width: min(560px, 100%);
+        margin: 18px 0 0;
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      main {
+        width: min(1040px, calc(100% - 32px));
+        margin: -24px auto 48px;
+      }
+
+      .diagnosis {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .panel,
+      .side-panel {
+        background: var(--paper);
+        border: 1px solid rgba(16, 32, 51, 0.08);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .panel {
+        min-height: 470px;
+        padding: clamp(20px, 3vw, 34px);
+      }
+
+      .side-panel {
+        padding: 22px;
+      }
+
+      .progress {
+        display: grid;
+        grid-template-columns: repeat(var(--steps, 5), 1fr);
+        gap: 5px;
+        margin-bottom: 28px;
+      }
+
+      .progress span {
+        height: 7px;
+        border-radius: 999px;
+        background: #dbe5ef;
+        overflow: hidden;
+      }
+
+      .progress span.is-active {
+        background: var(--leaf);
+      }
+
+      .step-label {
+        margin: 0 0 10px;
+        color: var(--field);
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .question-title {
+        margin: 0 0 10px;
+        font-size: clamp(1.65rem, 4vw, 2.65rem);
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .question-lead {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .score-hint {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .choices {
+        display: grid;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .choice {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 42px 1fr 22px;
+        gap: 14px;
+        align-items: center;
+        min-height: 78px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+        transition:
+          border-color 0.18s ease,
+          transform 0.18s ease,
+          box-shadow 0.18s ease;
+      }
+
+      .choice:hover,
+      .choice:focus-visible {
+        outline: none;
+        border-color: var(--leaf);
+        box-shadow: 0 12px 28px rgba(31, 173, 107, 0.16);
+        transform: translateY(-1px);
+      }
+
+      .choice-icon {
+        width: 42px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--sky);
+        color: var(--navy);
+        font-weight: 900;
+      }
+
+      .choice:nth-child(2) .choice-icon {
+        background: #fff0cc;
+      }
+
+      .choice:nth-child(3) .choice-icon {
+        background: #ffe3df;
+      }
+
+      .choice strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 1.02rem;
+      }
+
+      .choice small {
+        display: block;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .arrow {
+        color: var(--leaf);
+        font-weight: 900;
+      }
+
+      .side-title {
+        margin: 0 0 16px;
+        font-size: 1rem;
+      }
+
+      .course-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .course-mini {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .course-logo {
+        width: 100%;
+        height: 70px;
+        object-fit: contain;
+        object-position: left center;
+        margin-bottom: 12px;
+      }
+
+      .course-mini strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .course-mini p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .note {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.65;
+      }
+
+      .loading,
+      .result {
+        display: none;
+      }
+
+      .loading.is-show,
+      .result.is-show {
+        display: grid;
+      }
+
+      .loading {
+        min-height: 330px;
+        place-items: center;
+        text-align: center;
+      }
+
+      .loader {
+        width: 76px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 9px solid #e7eef6;
+        border-top-color: var(--leaf);
+        animation: spin 0.9s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading h2,
+      .result h2 {
+        margin: 0;
+        font-size: clamp(1.7rem, 4vw, 2.8rem);
+        letter-spacing: 0;
+      }
+
+      .loading p,
+      .result p {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .result {
+        gap: 24px;
+      }
+
+      .result-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 210px;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .result-logo-wrap {
+        min-height: 130px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #0c1016;
+        padding: 18px;
+      }
+
+      .result-logo-wrap.is-enjoy {
+        background: #fffdf4;
+      }
+
+      .result-logo {
+        width: 100%;
+        max-height: 116px;
+        object-fit: contain;
+      }
+
+      .result-badge {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #e8f8f0;
+        color: var(--field);
+        font-weight: 800;
+      }
+
+      .result-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .result-box {
+        padding: 18px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fbfdff;
+      }
+
+      .result-box h3 {
+        margin: 0 0 10px;
+        font-size: 1.02rem;
+      }
+
+      .result-box ul {
+        padding-left: 1.15em;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .primary,
+      .secondary,
+      .text-button {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 18px;
+        border-radius: 8px;
+        border: 0;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      .primary {
+        background: var(--field);
+        color: #fff;
+      }
+
+      .secondary {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .text-button {
+        min-height: 38px;
+        padding: 0 12px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--field);
+      }
+
+      .text-button:disabled {
+        color: #9aa9b8;
+        cursor: not-allowed;
+      }
+
+      .contact-strip {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+        padding: 16px 18px;
+        border-radius: 8px;
+        background: #eef8f3;
+        border: 1px solid #cfeadb;
+      }
+
+      .contact-strip p {
+        margin: 0;
+      }
+
+      .contact-strip strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .hero {
+          min-height: 50vh;
+        }
+
+        .hero::before {
+          background:
+            linear-gradient(180deg, rgba(9, 28, 47, 0.68), rgba(9, 28, 47, 0.48)),
+            url("assets/hero-youth-soccer.png") center / cover;
+        }
+
+        main {
+          margin-top: -18px;
+        }
+
+        .diagnosis {
+          grid-template-columns: 1fr;
+        }
+
+        .side-panel {
+          box-shadow: none;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .hero {
+          padding: 22px 16px;
+          min-height: 52vh;
+        }
+
+        .brand {
+          left: 16px;
+        }
+
+        .panel {
+          min-height: 0;
+        }
+
+        .choice {
+          grid-template-columns: 36px 1fr 18px;
+          padding: 13px;
+        }
+
+        .choice-icon {
+          width: 36px;
+        }
+
+        .result-body {
+          grid-template-columns: 1fr;
+        }
+
+        .result-head {
+          grid-template-columns: 1fr;
+        }
+
+        .primary,
+        .secondary,
+        .contact-strip .primary {
+          width: 100%;
+        }
+
+        .question-meta,
+        .contact-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="brand" aria-label="真栄FC U-12">
+          <img class="brand-logo" src="assets/player-logo.png" alt="" />
+          <span>真栄FC U-12</span>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">CLASS CHECK</p>
+          <h1>ぴったりのクラスを診断</h1>
+          <p>お子さまの経験・目標・楽しみ方から、選手コースとエンジョイスクールのどちらが合いそうかをチェックできます。</p>
+        </div>
+      </header>
+
+      <main>
+        <section class="diagnosis" aria-label="クラス診断">
+          <div class="panel">
+            <div id="quiz">
+              <div class="progress" aria-hidden="true">
+              </div>
+              <p class="step-label" id="stepLabel">Q1</p>
+              <h2 class="question-title" id="questionTitle"></h2>
+              <p class="question-lead" id="questionLead"></p>
+              <div class="question-meta">
+                <p class="score-hint" id="scoreHint">迷ったら、お子さまの今の気持ちに近いものを選んでください。</p>
+                <button class="text-button" type="button" id="backButton" disabled>前の質問へ</button>
+              </div>
+              <div class="choices" id="choices"></div>
+            </div>
+
+            <div class="loading" id="loading" aria-live="polite">
+              <div>
+                <div class="loader" aria-hidden="true"></div>
+                <h2>診断中...</h2>
+                <p>回答内容からおすすめのクラスを見ています。</p>
+              </div>
+            </div>
+
+            <div class="result" id="result" aria-live="polite">
+              <div class="result-head">
+                <div>
+                  <span class="result-badge" id="resultBadge"></span>
+                  <h2 id="resultTitle"></h2>
+                  <p id="resultText"></p>
+                </div>
+                <div class="result-logo-wrap" id="resultLogoWrap">
+                  <img class="result-logo" id="resultLogo" src="assets/player-logo.png" alt="" />
+                </div>
+              </div>
+              <div class="result-body">
+                <div class="result-box">
+                  <h3>向いているポイント</h3>
+                  <ul id="resultPoints"></ul>
+                </div>
+                <div class="result-box">
+                  <h3>次に見るところ</h3>
+                  <ul id="resultNext"></ul>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="primary" type="button" id="copyResult">結果をコピー</button>
+                <button class="secondary" type="button" id="restart">もう一度診断</button>
+              </div>
+              <div class="contact-strip">
+                <p>
+                  <strong>体験・相談で最終確認</strong>
+                  学年、経験、通える曜日を伝えると、より合う入口を相談しやすくなります。
+                </p>
+                <a class="primary" href="https://jpc-sports.com/" target="_blank" rel="noreferrer">公式サイトを見る</a>
+              </div>
+            </div>
+          </div>
+
+          <aside class="side-panel" aria-label="コース概要">
+            <h2 class="side-title">真栄FC U-12の2つの入口</h2>
+            <div class="course-list">
+              <div class="course-mini">
+                <img class="course-logo" src="assets/player-logo.png" alt="SHIN-EI FOOTBALL CLUB" />
+                <strong>選手コース</strong>
+                <p>試合での成長、技術向上、チームとして勝つ経験を大切にしたいお子さまへ。</p>
+              </div>
+              <div class="course-mini">
+                <img class="course-logo" src="assets/enjoy-logo.png" alt="SHIN-EI ENJOY SOCCER SCHOOL" />
+                <strong>エンジョイスクール</strong>
+                <p>まずは楽しく体を動かし、サッカーの基礎や仲間づくりから始めたいお子さまへ。</p>
+              </div>
+            </div>
+            <p class="note">診断結果は目安です。学年・経験・通える頻度などに合わせて、体験時にご相談ください。</p>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const gradeQuestion = {
+        title: "いまの学年を教えてください",
+        lead: "真栄FC U-12では、学年によって案内できる入口が変わります。",
+        hint: "まず学年を選ぶと、その後の質問が学年に合わせて変わります。",
+        choices: [
+          {
+            label: "1・2年生",
+            detail: "この学年は全員が選手コースの対象です",
+            grade: "lower",
+          },
+          {
+            label: "3・4年生",
+            detail: "選手コースとエンジョイスクールの両方から確認します",
+            grade: "middle",
+          },
+          {
+            label: "5・6年生",
+            detail: "新規ではエンジョイスクールを案内します",
+            grade: "upper",
+          },
+        ],
+      };
+
+      const pathQuestions = {
+        lower: [
+          {
+            title: "サッカーで楽しみにしていることは？",
+            lead: "1・2年生は選手コースが入口です。体験時に伝えたいことを整理します。",
+            choices: [
+              { label: "試合や練習を頑張ってみたい", detail: "これからチームで成長していきたい", score: 1 },
+              { label: "まずは友だちと楽しく始めたい", detail: "楽しい気持ちを大事にしたい", score: 0 },
+              { label: "まだ少し不安がある", detail: "体験で雰囲気を見ながら慣れたい", score: 0 },
+            ],
+          },
+          {
+            title: "体験で見てほしいことは？",
+            lead: "入会前に相談したいポイントを選んでください。",
+            choices: [
+              { label: "今の経験に合う練習か", detail: "無理なく参加できるか確認したい", score: 0 },
+              { label: "チームの雰囲気に合うか", detail: "コーチや仲間との相性を見たい", score: 0 },
+              { label: "どのくらい頑張れそうか", detail: "継続できるペースを相談したい", score: 0 },
+            ],
+          },
+        ],
+        middle: [
+          {
+            title: "一番近い目標はどれですか？",
+            lead: "3・4年生は、本人の目標や気持ちでおすすめが変わります。",
+            choices: [
+              { label: "試合で活躍できるようになりたい", detail: "成長や経験を積みたい", score: 2 },
+              { label: "サッカーを楽しく続けたい", detail: "まずは好きな気持ちを育てたい", score: -2 },
+              { label: "本人に合う場所を探したい", detail: "体験してから考えたい", score: 0 },
+            ],
+          },
+          {
+            title: "練習への気持ちはどれに近いですか？",
+            lead: "頑張る場面と楽しむ場面のどちらに寄っているかを見ます。",
+            choices: [
+              { label: "難しい練習にも挑戦したい", detail: "上達するために頑張れる", score: 2 },
+              { label: "楽しい雰囲気なら挑戦できそう", detail: "安心して参加できることが大切", score: -1 },
+              { label: "無理なく少しずつ慣れたい", detail: "まずは続けることを大切にしたい", score: -2 },
+            ],
+          },
+          {
+            title: "保護者として期待することは？",
+            lead: "どんな成長を一番大事にしたいか選んでください。",
+            choices: [
+              { label: "成長、経験、頑張る力", detail: "目標に向けて努力してほしい", score: 2 },
+              { label: "運動の楽しさと自信", detail: "サッカーを好きになってほしい", score: -2 },
+              { label: "礼儀や協調性も含めた成長", detail: "サッカー以外の面も伸ばしたい", score: 0 },
+            ],
+          },
+          {
+            title: "今のゴールはどちらに近いですか？",
+            lead: "最後に、今いちばんしっくりくるゴールを選んでください。",
+            choices: [
+              { label: "選手として試合や練習を頑張りたい", detail: "チームの一員として成長したい", score: 2 },
+              { label: "楽しい習い事として始めたい", detail: "仲間と楽しくボールを蹴りたい", score: -2 },
+              { label: "まず体験で決めたい", detail: "雰囲気を見て本人と相談したい", score: 0 },
+            ],
+          },
+        ],
+        upper: [
+          {
+            title: "5・6年生で始めるゴールは？",
+            lead: "5・6年生からの新規選手コースは受け入れがないため、エンジョイスクールでの目的を整理します。",
+            choices: [
+              { label: "楽しくサッカーを続けたい", detail: "無理なく体を動かす時間にしたい", score: 0 },
+              { label: "基礎を身につけたい", detail: "ボールに触れる機会を増やしたい", score: 0 },
+              { label: "友だちや仲間と運動したい", detail: "雰囲気を大切に参加したい", score: 0 },
+            ],
+          },
+          {
+            title: "体験で確認したいことは？",
+            lead: "入会後に続けやすいかを見やすくするための質問です。",
+            choices: [
+              { label: "通いやすい曜日や時間", detail: "続けやすいペースを確認したい", score: 0 },
+              { label: "初心者でも参加しやすいか", detail: "経験差があっても楽しめるか見たい", score: 0 },
+              { label: "コーチやクラスの雰囲気", detail: "本人が安心できるか確認したい", score: 0 },
+            ],
+          },
+        ],
+      };
+
+      const results = {
+        playerLower: {
+          badge: "おすすめ",
+          title: "選手コース",
+          logo: "assets/player-logo.png",
+          logoAlt: "SHIN-EI FOOTBALL CLUB",
+          logoTone: "player",
+          text: "1・2年生は全員が選手コースの対象です。まずは体験で雰囲気に慣れながら、チームの中でサッカーを楽しみ、少しずつ成長していく入口になります。",
+          points: ["1・2年生は選手コースで案内", "早い学年からチームの雰囲気に慣れられる", "楽しさと成長の両方を大切に始められる"],
+          next: ["体験時に学年と経験を伝える", "練習日と通いやすさを確認", "不安な点や慣れるまでの流れを相談"],
+        },
+        playerMiddle: {
+          badge: "おすすめ",
+          title: "選手コース",
+          logo: "assets/player-logo.png",
+          logoAlt: "SHIN-EI FOOTBALL CLUB",
+          logoTone: "player",
+          text: "3・4年生で、成長・経験・頑張ることへの気持ちが強そうです。試合や練習を通じてレベルアップを目指す選手コースがおすすめです。",
+          points: ["成長や経験を重ねたい気持ちがある", "少し難しい練習にも挑戦できそう", "試合やチーム活動が良い刺激になりやすい"],
+          next: ["現在の経験や本人の目標を相談", "練習頻度と試合参加の目安を確認", "体験で本人の前向きさを見てみる"],
+        },
+        enjoyMiddle: {
+          badge: "おすすめ",
+          title: "エンジョイスクール",
+          logo: "assets/enjoy-logo.png",
+          logoAlt: "SHIN-EI ENJOY SOCCER SCHOOL",
+          logoTone: "enjoy",
+          text: "3・4年生で、まずは楽しく通うことや安心して続けることを大切にできそうです。サッカーを好きになる入口として、エンジョイスクールがおすすめです。",
+          points: ["楽しい気持ちを軸に始めやすい", "経験差があっても参加しやすい", "運動習慣や仲間づくりにつながる"],
+          next: ["体験で雰囲気とコーチとの相性を確認", "通いやすい曜日や時間を相談", "慣れてきた後のステップアップも確認"],
+        },
+        enjoyUpper: {
+          badge: "おすすめ",
+          title: "エンジョイスクール",
+          logo: "assets/enjoy-logo.png",
+          logoAlt: "SHIN-EI ENJOY SOCCER SCHOOL",
+          logoTone: "enjoy",
+          text: "5・6年生からの新規選手コースは受け入れがないため、楽しくサッカーを続けられるエンジョイスクールがおすすめです。目的を決めて、無理なく参加しやすい形を確認しましょう。",
+          points: ["5・6年生からはエンジョイスクールで案内", "楽しく体を動かすゴールを設定しやすい", "初心者やブランクがあっても相談しやすい"],
+          next: ["体験で通いやすい曜日や時間を確認", "本人の参加目的をコーチに伝える", "経験差が不安な場合は事前に相談"],
+        },
+      };
+
+      const quiz = document.querySelector("#quiz");
+      const loading = document.querySelector("#loading");
+      const result = document.querySelector("#result");
+      const stepLabel = document.querySelector("#stepLabel");
+      const questionTitle = document.querySelector("#questionTitle");
+      const questionLead = document.querySelector("#questionLead");
+      const scoreHint = document.querySelector("#scoreHint");
+      const backButton = document.querySelector("#backButton");
+      const choices = document.querySelector("#choices");
+      const progressWrap = document.querySelector(".progress");
+      const resultBadge = document.querySelector("#resultBadge");
+      const resultTitle = document.querySelector("#resultTitle");
+      const resultText = document.querySelector("#resultText");
+      const resultLogoWrap = document.querySelector("#resultLogoWrap");
+      const resultLogo = document.querySelector("#resultLogo");
+      const resultPoints = document.querySelector("#resultPoints");
+      const resultNext = document.querySelector("#resultNext");
+      const copyResult = document.querySelector("#copyResult");
+      const restart = document.querySelector("#restart");
+
+      let current = 0;
+      let total = 0;
+      let answers = [];
+      let selectedGrade = null;
+      let activeQuestions = [gradeQuestion];
+      let lastResult = null;
+
+      function renderQuestion() {
+        const item = activeQuestions[current];
+        stepLabel.textContent = `Q${current + 1} / ${activeQuestions.length}`;
+        questionTitle.textContent = item.title;
+        questionLead.textContent = item.lead;
+        scoreHint.textContent = item.hint || getHint();
+        backButton.disabled = current === 0;
+        progressWrap.style.setProperty("--steps", activeQuestions.length);
+        progressWrap.replaceChildren(
+          ...activeQuestions.map(() => document.createElement("span")),
+        );
+        [...progressWrap.children].forEach((bar, index) => {
+          bar.classList.toggle("is-active", index <= current);
+        });
+
+        choices.replaceChildren(
+          ...item.choices.map((choice, index) => {
+            const button = document.createElement("button");
+            button.className = "choice";
+            button.type = "button";
+            button.innerHTML = `
+              <span class="choice-icon">${index + 1}</span>
+              <span>
+                <strong>${choice.label}</strong>
+                <small>${choice.detail}</small>
+              </span>
+              <span class="arrow">›</span>
+            `;
+            button.addEventListener("click", () => selectChoice(choice));
+            return button;
+          }),
+        );
+      }
+
+      function selectChoice(choice) {
+        if (current === 0) {
+          selectedGrade = choice.grade;
+          activeQuestions = [gradeQuestion, ...pathQuestions[selectedGrade]];
+          answers = [{ grade: selectedGrade, score: 0 }];
+          total = 0;
+          current = 1;
+          renderQuestion();
+          return;
+        }
+
+        const score = choice.score || 0;
+        answers[current] = { score };
+        total += score;
+        current += 1;
+
+        if (current < activeQuestions.length) {
+          renderQuestion();
+          return;
+        }
+
+        quiz.classList.add("hidden");
+        loading.classList.add("is-show");
+
+        window.setTimeout(() => {
+          showResult(getResultType());
+        }, 750);
+      }
+
+      function getHint() {
+        if (current === activeQuestions.length - 1) {
+          return "最後の質問です。今いちばんしっくりくるものを選んでください。";
+        }
+
+        if (selectedGrade === "middle") {
+          return "楽しい系が多い場合はエンジョイスクール、成長・経験・頑張る系が多い場合は選手コースに近づきます。";
+        }
+
+        return "体験時に相談したいことに近いものを選んでください。";
+      }
+
+      function getResultType() {
+        if (selectedGrade === "lower") return "playerLower";
+        if (selectedGrade === "upper") return "enjoyUpper";
+        return total >= 2 ? "playerMiddle" : "enjoyMiddle";
+      }
+
+      function showResult(type) {
+        const data = results[type];
+        lastResult = data;
+        loading.classList.remove("is-show");
+        result.classList.add("is-show");
+        resultBadge.textContent = data.badge;
+        resultTitle.textContent = data.title;
+        resultText.textContent = data.text;
+        resultLogo.src = data.logo;
+        resultLogo.alt = data.logoAlt;
+        resultLogoWrap.classList.toggle("is-enjoy", data.logoTone === "enjoy");
+        fillList(resultPoints, data.points);
+        fillList(resultNext, data.next);
+      }
+
+      function fillList(target, items) {
+        target.replaceChildren(
+          ...items.map((text) => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            return li;
+          }),
+        );
+      }
+
+      function reset() {
+        current = 0;
+        total = 0;
+        answers = [];
+        selectedGrade = null;
+        activeQuestions = [gradeQuestion];
+        lastResult = null;
+        result.classList.remove("is-show");
+        loading.classList.remove("is-show");
+        quiz.classList.remove("hidden");
+        copyResult.textContent = "結果をコピー";
+        renderQuestion();
+      }
+
+      function goBack() {
+        if (current === 0) return;
+
+        if (current === 1) {
+          current = 0;
+          total = 0;
+          answers = [];
+          selectedGrade = null;
+          activeQuestions = [gradeQuestion];
+          renderQuestion();
+          return;
+        }
+
+        current -= 1;
+        total -= answers[current]?.score || 0;
+        answers = answers.slice(0, current);
+        renderQuestion();
+      }
+
+      copyResult.addEventListener("click", async () => {
+        if (!lastResult) return;
+        const text = `真栄FC U-12 クラス診断結果：${lastResult.title}\n${lastResult.text}`;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyResult.textContent = "コピーしました";
+        } catch {
+          copyResult.textContent = "コピーできませんでした";
+        }
+      });
+
+      restart.addEventListener("click", reset);
+      backButton.addEventListener("click", goBack);
+
+      renderQuestion();
+    </script>
+  </body>
+</html>
