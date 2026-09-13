@@ -579,6 +579,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="experience.css" />
   </head>
   <body>
     <div class="page">
@@ -589,25 +590,33 @@
         </div>
         <div class="hero-copy">
           <p class="eyebrow">CLASS CHECK</p>
-          <h1>ぴったりのクラスを診断</h1>
-          <p>お子さまの経験・目標・楽しみ方から、選手コースとエンジョイスクールのどちらが合いそうかをチェックできます。</p>
+          <h1>「やってみたい」が、<br /><em>はじまりの合図。</em></h1>
+          <p>はじめての一歩も、もっと上手くなりたい気持ちも。<br />9つの質問で、お子さまに合うサッカーの入口を見つけよう。</p>
+          <div class="hero-tags"><span>全9問・約2分</span><span>初心者歓迎</span><span>体験無料</span></div>
         </div>
+        <div class="pitch-scene" aria-hidden="true"><div class="pitch"><i></i><b></b><span></span></div><div class="ball">⚽</div><div class="scene-label">YOUR FIRST KICK.</div></div>
       </header>
 
       <main>
+        <section class="banner-intro" aria-label="サッカーがもっと楽しくなる場所">
+          <img src="assets/club-banner.jpg" width="4760" height="1918" alt="真栄FC。サッカーがもっと楽しくなる場所。笑顔と仲間が、成長のチカラになる。無料体験受付中。" />
+          <div class="banner-caption"><p>はじめてでも大丈夫。<strong>お子さまに合う入口を、一緒に見つけよう。</strong></p><a href="#quiz" class="banner-start">9問の診断をはじめる ↓</a></div>
+        </section>
         <section class="diagnosis" aria-label="クラス診断">
           <div class="panel">
             <div id="quiz">
               <div class="progress" aria-hidden="true">
               </div>
               <p class="step-label" id="stepLabel">Q1</p>
-              <h2 class="question-title" id="questionTitle"></h2>
+              <h2 class="question-title" id="questionTitle" tabindex="-1"></h2>
               <p class="question-lead" id="questionLead"></p>
               <div class="question-meta">
                 <p class="score-hint" id="scoreHint">迷ったら、お子さまの今の気持ちに近いものを選んでください。</p>
                 <button class="text-button" type="button" id="backButton" disabled>前の質問へ</button>
               </div>
               <div class="choices" id="choices"></div>
+              <div class="coach-tip"><span>しおコーチから</span><p id="coachTip">正解・不正解はありません。お子さまと話しながら、今の気持ちに近いものを選んでください。</p></div>
+              <a class="quiz-help" href="https://faq.shinei-soccer.com/" target="_blank" rel="noopener noreferrer">質問や分からないことは、AIしおコーチへ ↗<small>別タブで相談できます。診断はこの画面から続けられます。</small></a>
             </div>
 
             <div class="loading" id="loading" aria-live="polite">
@@ -622,33 +631,46 @@
               <div class="result-head">
                 <div>
                   <span class="result-badge" id="resultBadge"></span>
-                  <h2 id="resultTitle"></h2>
+                  <h2 id="resultTitle" tabindex="-1"></h2>
                   <p id="resultText"></p>
                 </div>
                 <div class="result-logo-wrap" id="resultLogoWrap">
                   <img class="result-logo" id="resultLogo" src="assets/player-logo.png" alt="" />
                 </div>
               </div>
+              <a class="primary" href="https://forms.gle/Ut7Sn43C9N8rcv138" target="_blank" rel="noopener noreferrer">このコースを無料体験してみる ↗</a>
               <div class="result-body">
                 <div class="result-box">
-                  <h3>向いているポイント</h3>
+                  <h3>回答から見つけた、体験のヒント</h3>
                   <ul id="resultPoints"></ul>
                 </div>
                 <div class="result-box">
-                  <h3>次に見るところ</h3>
+                  <h3>気になっていたことに、お答えします</h3>
                   <ul id="resultNext"></ul>
                 </div>
               </div>
-              <div class="actions">
-                <button class="secondary" type="button" id="restart">もう一度診断</button>
-              </div>
+              <figure class="family-banner"><img src="assets/family-banner.jpg" width="4760" height="1918" loading="lazy" alt="その挑戦を、いちばん近くで応援したい。家族で見守り、仲間とともに成長する真栄FC。はじめの一歩を、いっしょに。" /><figcaption>その「やってみたい」を、家族で応援しよう。</figcaption></figure>
               <div class="contact-strip">
                 <p>
-                  <strong>体験・相談で最終確認</strong>
-                  学年、経験、通える曜日を伝えると、より合う入口を相談しやすくなります。
+                  <span class="eyebrow">LET'S TRY!</span>
+                  <strong>次は、グラウンドで<br />「楽しい！」を見つけよう。</strong>
+                  コースは体験時にも相談できます。まずは、お子さまと雰囲気を確かめてみませんか？
                 </p>
-                <a class="primary" href="https://shinei-soccer.com/" target="_blank" rel="noreferrer">公式サイトを見る</a>
+                <a class="primary" id="trialLink" href="https://forms.gle/Ut7Sn43C9N8rcv138" target="_blank" rel="noopener noreferrer">無料体験に申し込む ↗</a>
+                <small>Googleフォームが別タブで開きます。診断の回答は自動送信されません。</small>
               </div>
+              <div class="trial-steps"><div><b>01</b><strong>フォームで申込み</strong><p>希望や気になることを入力。</p></div><div><b>02</b><strong>メールでご案内</strong><p>申込み後、クラブからご連絡。</p></div><div><b>03</b><strong>いっしょに体験！</strong><p>雰囲気を見て、コースを相談。</p></div></div>
+              <details><summary>はじめての体験で知っておきたいこと</summary><p>体験は無料で、最大2回程度参加できます。保護者のお手伝いや当番はありません。会場への送迎は各ご家庭でお願いします。</p><p>体験参加中のケガにはチームのスポーツ保険は使えません。各ご家庭で加入している保険等をご利用ください。</p></details>
+              <section class="coach-invite" aria-labelledby="coachInviteTitle">
+                <a class="coach-banner-link" href="https://faq.shinei-soccer.com/" target="_blank" rel="noopener noreferrer" aria-label="AIしおコーチに質問する（別タブで開きます）"><img src="assets/ai-shio-coach-banner.png" width="1672" height="941" loading="lazy" alt="気になること、すぐ聞ける。AIしおコーチに質問しよう！入団前・入団後どちらも対応可能。" /></a>
+                <span class="coach-invite-label">入会前の「ちょっと気になる」に</span>
+                <h3 id="coachInviteTitle">迷ったら、<br />AIしおコーチに聞いてみよう。</h3>
+                <p>「初心者でも大丈夫？」「保護者の当番はある？」<br />体験の前に知っておきたいことを、気軽に質問できます。</p>
+                <div class="coach-topics" aria-label="相談できる話題"><span>コースの違い</span><span>練習・通い方</span><span>体験の準備</span></div>
+                <a class="coach-invite-button" href="https://faq.shinei-soccer.com/" target="_blank" rel="noopener noreferrer">AIしおコーチに質問する <span aria-hidden="true">↗</span></a>
+                <small>AIしおコーチが別タブで開きます。</small>
+              </section>
+              <div class="actions"><button class="secondary" type="button" id="restart">もう一度診断する</button></div>
             </div>
           </div>
 
@@ -672,11 +694,12 @@
       </main>
     </div>
 
+    <script src="questions.js"></script>
     <script>
       const gradeQuestion = {
         title: "いまの学年を教えてください",
         lead: "真栄FC U-12では、学年によって案内できる入口が変わります。",
-        hint: "まず学年を選ぶと、その後の質問が学年に合わせて変わります。",
+        hint: "学年と、このあとの回答に合わせて入口をご案内します。",
         choices: [
           {
             label: "1・2年生",
@@ -820,6 +843,7 @@
         },
       };
 
+      for (const grade of ["lower", "middle", "upper"]) pathQuestions[grade] = expandedQuestions;
       const quiz = document.querySelector("#quiz");
       const loading = document.querySelector("#loading");
       const result = document.querySelector("#result");
@@ -848,15 +872,21 @@
 
       function renderQuestion() {
         const item = activeQuestions[current];
-        stepLabel.textContent = `Q${current + 1} / ${activeQuestions.length}`;
+        stepLabel.textContent = `${current < 3 ? "01 お子さまのこと" : current < 6 ? "02 好きと挑戦" : "03 体験への一歩"}　 /　Q${current + 1} OF 9`;
         questionTitle.textContent = item.title;
         questionLead.textContent = item.lead;
         scoreHint.textContent = item.hint || getHint();
         backButton.disabled = current === 0;
-        progressWrap.style.setProperty("--steps", activeQuestions.length);
+        document.querySelector("#coachTip").textContent = item.tip || "正解・不正解はありません。お子さまと話しながら、今の気持ちに近いものを選んでください。";
+        quiz.animate([{opacity:0,transform:"translateY(12px)"},{opacity:1,transform:"translateY(0)"}], {duration:matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 320});
+        progressWrap.style.setProperty("--steps", 9);
         progressWrap.replaceChildren(
-          ...activeQuestions.map(() => document.createElement("span")),
+          ...Array.from({length:9}, () => document.createElement("span")),
         );
+        if(current > 0) {
+          questionTitle.focus({preventScroll:true});
+          document.querySelector(".panel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",block:"start"});
+        }
         [...progressWrap.children].forEach((bar, index) => {
           bar.classList.toggle("is-active", index <= current);
         });
@@ -892,7 +922,7 @@
         }
 
         const score = choice.score || 0;
-        answers[current] = { score };
+        answers[current] = { score, label: choice.label };
         total += score;
         current += 1;
 
@@ -915,7 +945,7 @@
         }
 
         if (selectedGrade === "middle") {
-          return "楽しい系が多い場合はエンジョイスクール、成長・経験・頑張る系が多い場合は選手コースに近づきます。";
+          return "今の気持ちに近いものをひとつ選んでください。";
         }
 
         return "体験時に相談したいことに近いものを選んでください。";
@@ -940,6 +970,16 @@
         resultLogoWrap.classList.toggle("is-enjoy", data.logoTone === "enjoy");
         fillList(resultPoints, data.points);
         fillList(resultNext, data.next);
+        const interest = answers[3]?.label;
+        fillList(resultPoints, [`楽しみにしていること：「${interest}」`, `体験で確かめたいこと：「${answers[8]?.label}」`, data.points[0]]);
+        const familyTips = {"他の習い事との両立":"他の習い事との両立も相談できます。通える曜日や時間を体験時にお伝えください。", "送迎や保護者の負担":"保護者の当番・お手伝いはありません。会場への送迎は各ご家庭でお願いします。", "本人が楽しく通えること":"お子さまの成長や気持ちに合う環境を、一緒に考えます。"};
+        const worryTips = {"練習についていけるかな":"一人だけを置いていく指導はしません。できることから一つずつ支えます。", "コーチや仲間となじめるかな":"コーチと選手が会話し、笑い合える距離の近い環境を大切にしています。", "まずはやってみたい！":"体験は無料です。実際に参加して、お子さまの気持ちを確かめてみてください。"};
+        fillList(resultNext, [familyTips[answers[6]?.label],worryTips[answers[7]?.label]]);
+        if(selectedGrade === "middle" && total === 0) resultText.textContent = "まだ気持ちを探している段階ですね。楽しく始める入口としてエンジョイスクールをご紹介します。選手コースも対象なので、体験時に両方の違いを相談してから選べます。";
+        if(selectedGrade === "upper") resultText.textContent += " 転校に伴う選手コースへの加入希望は個別セレクションで対応します。フォームからご相談ください。";
+        document.querySelector("#trialLink").textContent = `${data.title}の無料体験へ ↗`;
+        resultTitle.focus({preventScroll:true});
+        document.querySelector(".panel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",block:"start"});
       }
 
       function fillList(target, items) {
