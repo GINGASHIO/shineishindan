@@ -42,7 +42,7 @@ main { width:min(1200px,calc(100% - 48px));margin:0 auto 40px; }
 .diagnosis-intro h2 { margin:0;font-size:34px;letter-spacing:-.05em; }
 .diagnosis-intro h2 span { color:#4d7e39; }
 .diagnosis-intro>p { margin:0;color:var(--muted);font-size:12px;line-height:1.9; }
-.diagnosis { grid-template-columns:minmax(0,1fr) 320px;gap:26px; }
+.diagnosis { grid-template-columns:minmax(0,1fr) 320px;gap:26px;scroll-margin-top:24px; }
 .panel { border-radius:24px;box-shadow:0 20px 50px #182e2a08;border:1px solid #dce4d4;padding:32px; }
 .journey { display:flex;align-items:center;gap:8px;padding-bottom:25px; }
 .journey span { font-size:10px;color:#758070;white-space:nowrap; }
