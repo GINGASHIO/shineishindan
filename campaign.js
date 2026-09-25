@@ -20,13 +20,4 @@
     else {startLink.removeAttribute('target');startLink.removeAttribute('rel');}
   });
   new IntersectionObserver(([entry]) => {dock.hidden = entry.isIntersecting;}, {threshold:0}).observe(document.querySelector('.hero'));
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  if (!reduced.matches) {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.animate([{opacity:.35,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:550,easing:'ease-out'});
-      observer.unobserve(entry.target);
-    }), {threshold:.12});
-    document.querySelectorAll('.banner-intro,.coach-invite,.try-moments,.side-coach').forEach(el=>observer.observe(el));
-  }
 })();

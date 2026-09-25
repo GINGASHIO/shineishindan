@@ -583,30 +583,34 @@
     <meta name="theme-color" content="#123d31" />
     <link rel="stylesheet" href="experience.css?v=20260919" />
     <link rel="stylesheet" href="campaign.css?v=20260919" />
+    <link rel="stylesheet" href="motion.css?v=20260926" />
   </head>
   <body>
     <div class="page">
       <header class="hero">
+        <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="false">動き：オフ</button>
         <div class="brand" aria-label="真栄FC U-12">
           <img class="brand-logo" src="assets/player-logo.png" alt="" />
           <span>真栄FC U-12</span>
         </div>
         <div class="hero-copy">
           <p class="eyebrow">はじめてのサッカー、真栄FCで。</p>
-          <h1><span>「また行きたい！」</span><br />その一言が、<br /><em>成長のはじまり。</em></h1>
+          <h1><span class="headline-line headline-small">「また行きたい！」</span><span class="headline-line">その一言が、</span><em class="headline-line">成長のはじまり。</em></h1>
           <p class="hero-description">楽しく始めたい子も、試合に挑戦したい子も。<br />お子さまの「好き」に合う場所を、親子で見つけよう。</p>
           <div class="hero-tags"><span>初心者歓迎</span><span>体験無料</span><span>保護者の当番なし</span></div>
           <div class="hero-actions" id="heroActions"><a class="campaign-primary" href="#diagnosis"><span><small>全9問・約2分</small>うちの子に合うコースを見つける</span><b aria-hidden="true">↗</b></a><a class="hero-consult" href="https://faq.shinei-soccer.com/" target="_blank" rel="noopener noreferrer">はじめる前の不安は、AIしおコーチへ ↗</a></div>
         </div>
         <div class="hero-photo" aria-hidden="true"><img src="assets/club-banner.jpg" width="4760" height="1918" alt="" fetchpriority="high" /><div class="photo-message"><span>一人ひとりの、はじめの一歩。</span><strong>できた！も、<br />くやしい！も、<br /><em>仲間といっしょに。</em></strong></div><span class="photo-stamp">LET'S<br />PLAY!</span></div>
-        <div class="pitch-scene" aria-hidden="true"><div class="pitch"><i></i><b></b><span></span></div><div class="ball">⚽</div><div class="scene-label">YOUR FIRST KICK.</div></div>
+        <div class="hero-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
       </header>
 
       <main>
         <section class="welcome-proof" aria-label="はじめての方へ"><div><b>01</b><p><strong>今の上手さより、これからの気持ち。</strong><span>「やってみたい」から始められます。</span></p></div><div><b>02</b><p><strong>体験は無料。ボールも貸出。</strong><span>まずは練習の雰囲気を確かめよう。</span></p></div><div><b>03</b><p><strong>保護者の当番・お手伝いなし。</strong><span>会場への送迎はご家庭でお願いします。</span></p></div></section>
+        <section class="kickoff-card" aria-labelledby="kickoffTitle"><div><p class="section-kicker">YOUR FIRST KICK</p><h2 id="kickoffTitle">はじめの一歩は、<br /><span>小さなキックから。</span></h2><p>うまくできるかな？ は、あとで大丈夫。<br />まずはボールにタッチしてみよう。</p></div><button class="kickoff-toy" id="kickoffButton" type="button" aria-label="ボールをキックして9問の診断をはじめる"><span class="toy-stage" aria-hidden="true"><span class="toy-pitch"><i></i><b></b><span class="toy-goal"></span></span><span class="toy-ball">⚽</span><span class="toy-ring"></span><span class="toy-shadow"></span></span><span class="kickoff-label">ボールにタッチ <b aria-hidden="true">↗</b><small>キックして診断スタート</small></span></button></section>
         <div class="diagnosis-intro"><div><p class="section-kicker">FIND YOUR START</p><h2>うちの子は、<span>どっちから？</span></h2></div><p>「楽しい」が育つ入口は、一人ひとり違うから。<br />今の気持ちに近い答えを選んでみてください。</p></div>
         <section class="diagnosis" id="diagnosis" aria-label="クラス診断">
           <div class="panel">
+            <div class="field-progress" id="fieldProgress" aria-label="回答の進み具合"><div class="field-caption"><strong id="fieldMessage">さあ、最初の一歩。</strong><span id="fieldCount">0 / 9 回答</span></div><div class="field-track" aria-hidden="true"><span class="field-fill"></span><span class="field-runner">⚽</span><span class="field-goal">⚑</span></div></div>
             <div id="quiz">
               <div class="journey" aria-label="診断のステップ"><span data-stage="0" class="is-current"><b>01</b>お子さまのこと</span><i></i><span data-stage="1"><b>02</b>好きと挑戦</span><i></i><span data-stage="2"><b>03</b>体験への一歩</span></div>
               <div class="progress" aria-hidden="true">
@@ -625,9 +629,9 @@
 
             <div class="loading" id="loading" aria-live="polite">
               <div>
-                <div class="loader" aria-hidden="true"></div>
-                <h2>診断中...</h2>
-                <p>回答内容からおすすめのクラスを見ています。</p>
+                <div class="loading-ball" aria-hidden="true">⚽</div>
+                <h2>お子さまの「好き」を、<br />次の一歩へ。</h2>
+                <p>回答に合うコースをまとめています。</p>
               </div>
             </div>
 
@@ -712,6 +716,7 @@
     </div>
 
     <script src="questions.js?v=20260919"></script>
+    <script src="motion.js?v=20260926"></script>
     <script>
       const gradeQuestion = {
         title: "いまの学年を教えてください",
@@ -886,11 +891,12 @@
       let selectedGrade = null;
       let activeQuestions = [gradeQuestion];
       let lastResult = null;
+      let selectionPending = false;
+      const motionAllowed = () => window.courseMotion?.enabled() ?? !matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       function renderQuestion() {
         document.body.classList.remove("has-result");
         document.querySelectorAll("[data-stage]").forEach((stage) => stage.classList.toggle("is-current", Number(stage.dataset.stage) === Math.floor(current / 3)));
-        document.dispatchEvent(new CustomEvent("diagnosischange", {detail:{result:false,current}}));
         const item = activeQuestions[current];
         stepLabel.textContent = `${current < 3 ? "01 お子さまのこと" : current < 6 ? "02 好きと挑戦" : "03 体験への一歩"}　 /　Q${current + 1} OF 9`;
         questionTitle.textContent = item.title;
@@ -898,14 +904,14 @@
         scoreHint.textContent = item.hint || getHint();
         backButton.disabled = current === 0;
         document.querySelector("#coachTip").textContent = item.tip || "正解・不正解はありません。お子さまと話しながら、今の気持ちに近いものを選んでください。";
-        quiz.animate([{opacity:0,transform:"translateY(12px)"},{opacity:1,transform:"translateY(0)"}], {duration:matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 320});
         progressWrap.style.setProperty("--steps", 9);
         progressWrap.replaceChildren(
           ...Array.from({length:9}, () => document.createElement("span")),
         );
         if(current > 0) {
           questionTitle.focus({preventScroll:true});
-          document.querySelector(".panel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",block:"start"});
+          const top = document.querySelector(".panel").getBoundingClientRect().top;
+          if (top < -60 || top > innerHeight * .45) document.querySelector(".panel").scrollIntoView({behavior:motionAllowed() ? "smooth" : "instant",block:"start"});
         }
         [...progressWrap.children].forEach((bar, index) => {
           bar.classList.toggle("is-active", index <= current);
@@ -924,10 +930,19 @@
               </span>
               <span class="arrow">›</span>
             `;
-            button.addEventListener("click", () => selectChoice(choice));
+            button.addEventListener("click", async () => {
+              if (selectionPending) return;
+              selectionPending = true;
+              backButton.disabled = true;
+              choices.querySelectorAll("button").forEach(el => { el.disabled = true; });
+              if (window.courseMotion) await window.courseMotion.accept(button);
+              selectChoice(choice);
+              selectionPending = false;
+            });
             return button;
           }),
         );
+        document.dispatchEvent(new CustomEvent("diagnosischange", {detail:{result:false,current}}));
       }
 
       function selectChoice(choice) {
@@ -953,10 +968,11 @@
 
         quiz.classList.add("hidden");
         loading.classList.add("is-show");
+        window.courseMotion?.finish();
 
         window.setTimeout(() => {
           showResult(getResultType());
-        }, 750);
+        }, motionAllowed() ? 850 : 0);
       }
 
       function getHint() {
@@ -986,7 +1002,6 @@
         resultTitle.textContent = data.title;
         document.body.classList.add("has-result");
         document.querySelector("#resultPromise").textContent = data.logoTone === "enjoy" ? "「また来週も行きたい！」を、ここから。" : "「もっと上手くなりたい！」を、ここから。";
-        document.dispatchEvent(new CustomEvent("diagnosischange", {detail:{result:true,current}}));
         resultText.textContent = data.text;
         resultLogo.src = data.logo;
         resultLogo.alt = data.logoAlt;
@@ -1002,7 +1017,8 @@
         if(selectedGrade === "upper") resultText.textContent += " 転校に伴う選手コースへの加入希望は個別セレクションで対応します。フォームからご相談ください。";
         document.querySelector("#trialLink").textContent = `${data.title}の無料体験へ ↗`;
         resultTitle.focus({preventScroll:true});
-        document.querySelector(".panel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",block:"start"});
+        document.querySelector(".panel").scrollIntoView({behavior:motionAllowed() ? "smooth" : "instant",block:"start"});
+        document.dispatchEvent(new CustomEvent("diagnosischange", {detail:{result:true,current}}));
       }
 
       function fillList(target, items) {
@@ -1027,10 +1043,11 @@
         quiz.classList.remove("hidden");
         renderQuestion();
         questionTitle.focus({preventScroll:true});
-        document.querySelector(".panel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",block:"start"});
+        document.querySelector(".panel").scrollIntoView({behavior:motionAllowed() ? "smooth" : "instant",block:"start"});
       }
 
       function goBack() {
+        if (selectionPending) return;
         if (current === 0) return;
 
         if (current === 1) {
@@ -1054,6 +1071,6 @@
 
       renderQuestion();
     </script>
-    <script src="campaign.js?v=20260919"></script>
+    <script src="campaign.js?v=20260926"></script>
   </body>
 </html>
