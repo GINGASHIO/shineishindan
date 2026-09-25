@@ -583,7 +583,8 @@
     <meta name="theme-color" content="#123d31" />
     <link rel="stylesheet" href="experience.css?v=20260919" />
     <link rel="stylesheet" href="campaign.css?v=20260919" />
-    <link rel="stylesheet" href="motion.css?v=20260926" />
+    <link rel="stylesheet" href="motion.css?v=20260926-goal" />
+    <link rel="stylesheet" href="kickoff.css?v=20260926-goal" />
   </head>
   <body>
     <div class="page">
@@ -606,7 +607,7 @@
 
       <main>
         <section class="welcome-proof" aria-label="はじめての方へ"><div><b>01</b><p><strong>今の上手さより、これからの気持ち。</strong><span>「やってみたい」から始められます。</span></p></div><div><b>02</b><p><strong>体験は無料。ボールも貸出。</strong><span>まずは練習の雰囲気を確かめよう。</span></p></div><div><b>03</b><p><strong>保護者の当番・お手伝いなし。</strong><span>会場への送迎はご家庭でお願いします。</span></p></div></section>
-        <section class="kickoff-card" aria-labelledby="kickoffTitle"><div><p class="section-kicker">YOUR FIRST KICK</p><h2 id="kickoffTitle">はじめの一歩は、<br /><span>小さなキックから。</span></h2><p>うまくできるかな？ は、あとで大丈夫。<br />まずはボールにタッチしてみよう。</p></div><button class="kickoff-toy" id="kickoffButton" type="button" aria-label="ボールをキックして9問の診断をはじめる"><span class="toy-stage" aria-hidden="true"><span class="toy-pitch"><i></i><b></b><span class="toy-goal"></span></span><span class="toy-ball">⚽</span><span class="toy-ring"></span><span class="toy-shadow"></span></span><span class="kickoff-label">ボールにタッチ <b aria-hidden="true">↗</b><small>キックして診断スタート</small></span></button></section>
+        <section class="kickoff-card" aria-labelledby="kickoffTitle"><div><p class="section-kicker">YOUR FIRST KICK</p><h2 id="kickoffTitle">はじめの一歩は、<br /><span>小さなキックから。</span></h2><p>うまくできるかな？ は、あとで大丈夫。<br />まずはボールにタッチしてみよう。</p></div><button class="kickoff-toy" id="kickoffButton" type="button" aria-label="ボールをゴールへキックして9問の診断をはじめる"><svg id="kickoffScene" class="kickoff-scene" viewBox="0 0 400 290" aria-hidden="true" focusable="false"></svg><span class="kickoff-label">ボールにタッチ <b aria-hidden="true">↗</b><small>ゴールを決めて、診断スタート</small></span></button></section>
         <div class="diagnosis-intro"><div><p class="section-kicker">FIND YOUR START</p><h2>うちの子は、<span>どっちから？</span></h2></div><p>「楽しい」が育つ入口は、一人ひとり違うから。<br />今の気持ちに近い答えを選んでみてください。</p></div>
         <section class="diagnosis" id="diagnosis" aria-label="クラス診断">
           <div class="panel">
@@ -716,7 +717,8 @@
     </div>
 
     <script src="questions.js?v=20260919"></script>
-    <script src="motion.js?v=20260926"></script>
+    <script src="kickoff.js?v=20260926-goal"></script>
+    <script src="motion.js?v=20260926-goal"></script>
     <script>
       const gradeQuestion = {
         title: "いまの学年を教えてください",

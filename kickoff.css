@@ -1,0 +1,24 @@
+/* Shared SVG camera keeps the shot inside the goal at every viewport size. */
+.kickoff-card { grid-template-columns:1fr 400px; }
+.kickoff-toy { height:330px; }
+.kickoff-scene { display:block;position:absolute;top:0;left:0;width:100%;height:290px;overflow:visible;pointer-events:none; }
+.kick-ball-position,.kick-ball-shadow,.kick-ball-roll,.kick-net { transform-origin:0 0; }
+.kick-goal-message { opacity:0; }
+.is-goal .kick-goal-message { opacity:1; }
+.kickoff-label { bottom:6px; }
+.kickoff-toy:disabled { cursor:default; }
+@media (max-width:1000px) and (min-width:761px) {
+  .kickoff-card { grid-template-columns:1fr 340px;padding:24px; }
+  .kickoff-toy { height:300px; }
+  .kickoff-scene { height:260px; }
+}
+@media (max-width:760px) {
+  .kickoff-card { grid-template-columns:1fr;padding:24px 18px 18px;gap:5px; }
+  .kickoff-card>div { text-align:center; }
+  .kickoff-card h2 { font-size:24px;line-height:1.5; }
+  .kickoff-card>div>p:last-child { font-size:11px; }
+  .kickoff-toy { width:100%;max-width:360px;height:auto;aspect-ratio:400/345;margin:auto; }
+  .kickoff-scene { height:auto;aspect-ratio:400/290; }
+  .kickoff-label { font-size:13px;bottom:3px; }
+  .kickoff-label small { font-size:10px; }
+}

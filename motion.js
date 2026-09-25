@@ -91,7 +91,7 @@
     if (kicking) return;
     kicking = true;
     kick.disabled = true;
-    await run(kick.querySelector('.toy-ball'),[{transform:'translateY(0) scale(1) rotate(0deg)'},{transform:'translate(56px,-27px) scale(.65) rotate(230deg)',offset:.65},{transform:'translate(92px,8px) scale(.32) rotate(390deg)',opacity:0}],{duration:600,easing:'cubic-bezier(.2,.7,.4,1)'});
+    if (window.kickoffScene) await window.kickoffScene.shoot(run);
     document.querySelector('.panel').scrollIntoView({behavior:enabled()?'smooth':'instant',block:'start'});
     (document.body.classList.contains('has-result') ? document.querySelector('#resultTitle') : document.querySelector('#questionTitle')).focus({preventScroll:true});
     kick.disabled = false; kicking = false;
